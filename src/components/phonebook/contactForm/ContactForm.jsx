@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
+import { Button } from './ContactFormStyled';
 
 export default class ContactForm extends Component {
   state = {
     name: '',
     number: '',
   };
-
-  handleChange = event => {
-    const { name, value } = event.currenttarget;
+  handleChange = e => {
+    const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
+  handleSubmit = e => {
+    e.preventDefault();
 
     this.props.onSubmit(this.state);
     this.setState({ name: '', number: '' });
@@ -21,9 +21,9 @@ export default class ContactForm extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <p>Name</p>
-        <form
+        <input
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -34,7 +34,7 @@ export default class ContactForm extends Component {
         />
 
         <p>Number</p>
-        <form
+        <input
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -43,8 +43,8 @@ export default class ContactForm extends Component {
           onChange={this.handleChange}
           required
         />
-        <button type="submit">Add contact</button>
-      </div>
+        <Button type="submit">Add contact</Button>
+      </form>
     );
   }
 }
